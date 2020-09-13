@@ -74,9 +74,7 @@ public class ListEmpleados extends HttpServlet {
             out.println("<br><br>");
             out.println(ejbSessionManagerBean.getActiveSessionContador()+" Usuarios que están usando la aplicación");
             out.println("</body>");
-            
-            
-            
+
             out.println("</html>");
         }
     }
