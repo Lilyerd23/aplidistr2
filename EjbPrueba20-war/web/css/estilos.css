@@ -1,0 +1,126 @@
+/* Importanto las fuentes de goggle */
+@import url('https://fonts.googleapis.com/css?family=Merriweather&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Courgette&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Nanum+Myeongjo&display=swap');
+
+/* Estilos del navbar*/
+.navbar {
+	font-family: 'Merriweather', serif;
+	font-size: 16px;
+	background-color: #009688;
+	background-color: rgba(233, 30, 99, 0.98);
+}
+
+.navbar-light .navbar-nav .nav-link {
+    color: #fff;
+}
+
+.navbar-brand img {
+	width: 138px;
+}
+
+
+/* Estilos del Carrusel */
+.carousel-item {
+  font-family: 'Courgette', cursive;
+}
+
+.carousel-caption h5  {
+	font-size: 4rem;
+}
+
+.carousel-caption p  {
+	color: #000;
+	font-size: 28px;
+}
+
+.btn-propio {
+	border-color: transparent;
+	background-color: rgba(233, 30, 99, 0.7);
+	width: 200px;
+}
+
+/* Cursos */
+.cursos {
+	padding: 60px 0;
+	font-family: 'Nanum Myeongjo', serif;
+}
+
+.cursos h1 {
+	color: rgba(233, 30, 99, 0.7);
+	margin-bottom: 10px;
+	font-size: 80px;
+	letter-spacing: 3px;
+}
+
+.cursos p {
+	font-size: 20px;
+	margin-bottom: 30px;
+}
+
+.card-title {
+	color: #000;
+	text-align: center;
+	font-weight: bold;
+	font-size: 30px;
+}
+
+.card-text {
+	text-align: justify;
+}
+ 
+.btn-color {
+	background-color: #E91E63;
+	border-color: #E91E63;
+}
+
+/* Acomodando la información mostrada en el carrusel*/
+@media (max-width: 767px) {
+	.carousel-caption h5  {
+		font-size: 35px;
+	}
+
+	.carousel-caption p  {
+		font-size: 15px;
+	}
+	.btn-propio {
+		width: 130px;
+	}
+	.btn-lg {
+		font-size: 18px;
+	}
+	
+}
+
+/* Contáctanos */
+.contactanos {
+	padding: 60px 0;
+	font-family: 'Nanum Myeongjo', serif;
+	background-color: #e41d61;
+}
+
+.contactanos label {
+	color: white;
+	font-size: 18px;
+}
+
+.contactanos h1 {
+	color: white;
+	margin-bottom: 20px;
+	font-size: 60px;
+	letter-spacing: 3px;
+}
+
+/* Acomodando la información mostrada en el carrusel*/
+@media (max-width: 767px) {
+	.contactanos h1 {
+		font-size: 40px;
+	}
+
+}
+/* Footer */
+footer {
+	padding: 20px 0;
+	font-family: 'Nanum Myeongjo', serif;
+	font-weight: bold;
+}
