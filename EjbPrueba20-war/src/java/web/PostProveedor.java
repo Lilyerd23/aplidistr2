@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package web;
-import ejb.EmpleadoEntidad;
+import ejb.ProveedorEntidad;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
@@ -31,12 +31,12 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author alexandro
  */
-@WebServlet(name = "PostEmpleado", urlPatterns = {"/PostEmpleado"})
-public class PostEmpleado extends HttpServlet {
+@WebServlet(name = "PostProveedor", urlPatterns = {"/PostProveedor"})
+public class PostProveedor extends HttpServlet {
 
     @Resource(mappedName = "jms/NewMessageFactory")
     private ConnectionFactory connectionFactory;
-    @Resource(mappedName = "jms/EmpleadoMessageBean")
+    @Resource(mappedName = "jms/ProveedorMessageBean")
     private Queue queue;
 
     /**
@@ -53,42 +53,44 @@ public class PostEmpleado extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         ////////////////////////////
 
-        String dni = request.getParameter("dni");
-        String nombres = request.getParameter("nombres");
-        String apellidos = request.getParameter("apellidos");
-        String direccion = request.getParameter("direccion");
+        String proveedor = request.getParameter("proveedor");
         String telefono = request.getParameter("telefono");
-        String email = request.getParameter("email");
-        String cargo = request.getParameter("cargo");;
+        String direccion = request.getParameter("direccion");
+        String correo = request.getParameter("correo");
+        String cargo = request.getParameter("cargo");
+        String fecha = request.getParameter("fecha");
 
-        if ((dni != null) && (nombres != null)) {
+        if ((proveedor != null) && (telefono != null)) {
             try {
                 Connection connection = connectionFactory.createConnection();
                 Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
                 MessageProducer messageProducer = session.createProducer(queue);
                 ObjectMessage message = session.createObjectMessage();
-                EmpleadoEntidad e = new EmpleadoEntidad();
-                e.setDni(dni);
-                e.setNombres(nombres);
-                e.setApellidos(apellidos);
-                e.setDireccion(direccion);
+                ProveedorEntidad e = new ProveedorEntidad();
+                e.setProveedor(proveedor);
                 e.setTelefono(telefono);
-                e.setEmail(email);
-                e.setCargo(cargo);
+                e.setDireccion(direccion);
+                e.setCorreo(correo);
 
-                /////////
-          
+                Calendar fechaCal = Calendar.getInstance();
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                Date fechaIn = sdf.parse(fecha);
+                fechaCal.setTime(fechaIn);
+                e.setFecha(fechaCal);
+              
                 //e.setFechaingreso(fechaingreso);
                 ////////
                 message.setObject(e);
                 messageProducer.send(message);
                 messageProducer.close();
                 connection.close();
-                //response.sendRedirect("ListEmpleado");
+                //response.sendRedirect("ListProveedor");
 
             } catch (JMSException ex) {
                 ex.printStackTrace();
-            } 
+            } catch (ParseException ex) {
+                Logger.getLogger(PostEmpleado.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
 
         ///////////////////////////
@@ -111,37 +113,29 @@ public class PostEmpleado extends HttpServlet {
             out.println("<div class='container' id='registration-form'>");
             out.println("<div class='image'></div>");
             out.println("<div class='frm'>");
-            out.println("<h1>EMPLEADO</h1>");
-            out.println("<form action='PostEmpleado' method='post'>");
+            out.println("<h1>Proveedor</h1>");
+            out.println("<form action='PostProveedor' method='post'>");
 
             out.println("<div class='form-group'>");
-            out.println("<label for='username'>DNI:</label>");
-            out.println("<input type='text' name='dni' class='form-control' placeholder='Ingresar DNI'>");
+            out.println("<label for='username'>PROVEEDOR:</label>");
+            out.println("<input type='text' name='proveedor' class='form-control' placeholder='Ingresar proveedor'>");
             out.println("</div>");
             out.println("<div class='form-group'>");
-            out.println("<label for='username'>APELLIDOS:</label>");
-            out.println("<input type='text' name='apellidos' class='form-control' placeholder='Ingresar Apellidos'>");
-            out.println("</div>");
-            out.println("<div class='form-group'>");
-            out.println("<label for='username'>NOMBRES:</label>");
-            out.println("<input type='text' name='nombres' class='form-control' placeholder='Ingresar Nombre'>");
+            out.println("<label for='username'>TELEFONO:</label>");
+            out.println("<input type='text' name='telefono' class='form-control' placeholder='Ingresar Nombre'>");
             out.println("</div>");
             out.println("<div class='form-group'>");
             out.println("<label for='username'>DIRECCION:</label>");
             out.println("<input type='text' name='direccion' class='form-control' placeholder='Ingresar Direccion'>");
             out.println("</div>");
             out.println("<div class='form-group'>");
-            out.println("<label for='username'>TELEFONO:</label>");
-            out.println("<input type='txt' name='telefono' class='form-control' placeholder='Ingresar Telefono'>");
+            out.println("<label for='username'>CORREO:</label>");
+            out.println("<input type='txt' name='correo' class='form-control' placeholder='Ingresar correo'>");
             out.println("</div>");
-            out.println("<div class='form-group'>");
-            out.println("<label for='username'>EMAIL:</label>");
-            out.println("<input type='txt' name='email' class='form-control' placeholder='Ingresar Email'>");
+            out.println("<label for='username'>FECHA:</label>");
+            out.println("<input type='date' name='fecha' class='form-control' >");
             out.println("</div>");
-            out.println("<div class='form-group'>");
-            out.println("<label for='username'>CARGO:</label>");
-            out.println("<input type='txt' name='cargo' class='form-control' placeholder='Ingresar cargo'>");
-            out.println("</div>");
+            
             out.println("<div class='form-group'>");
             out.println("<input type='submit' class='btn btn-success btn-lg' value='Guardar'>");
             out.println("</div>");
